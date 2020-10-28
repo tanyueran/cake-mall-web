@@ -31,7 +31,7 @@ request.interceptors.request.use((config) => {
 
   // 此处可以添加认证的token
   if (store.getState().userReducer.userInfo.isLogin) {
-    config.headers.Authorization = store.getState().userReducer.userInfo.token;
+    config.headers.token = store.getState().userReducer.userInfo.token;
   }
 
   return config;

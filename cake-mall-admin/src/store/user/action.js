@@ -63,7 +63,9 @@ export function userLogin(data, func, errFunc) {
 export function pullUserInfo() {
   return dispatch => {
     getUserInfo().then(data => {
-      dispatch(set_user(data));
+      let userInfo = data.cakeUser;
+      userInfo.roleInfo = data.cakeUserRole;
+      dispatch(set_user(userInfo));
       let list = [];
       data.roles.forEach(item => {
         list.push(item.id);

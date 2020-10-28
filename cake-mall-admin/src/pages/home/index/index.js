@@ -11,6 +11,11 @@ import style from "./index.module.scss";
 
 // 首页默认显示的
 class HomePage extends React.Component {
+
+  componentWillUnmount() {
+    this.setState = () => false;
+  }
+
   render() {
     return <div style={{fontSize: '20px'}} className={style['home-page-content']}>
       {new moment(new Date()).format('YYYY年MM月DD日')}

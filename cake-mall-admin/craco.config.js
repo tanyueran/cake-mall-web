@@ -1,4 +1,5 @@
 const CracoLessPlugin = require('craco-less');
+const path = require('path');
 
 module.exports = {
   devServer: {
@@ -18,4 +19,10 @@ module.exports = {
       },
     },
   ],
+  webpack: {
+    // 可以此处拦截
+    configure: (webpackConfig, {env, paths}) => {
+      return webpackConfig;
+    }
+  }
 };

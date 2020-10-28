@@ -65,7 +65,6 @@ export function userReducer(state = defaultValue, action) {
       Storage.set('userInfo', o2);
       return obj3;
 
-
     case DEl_USER:
       let obj2 = Object.assign({}, state, {
         userInfo: {

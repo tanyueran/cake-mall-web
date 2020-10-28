@@ -10,9 +10,9 @@ import {
   Form,
   Input,
   Button,
-  Checkbox,
   Typography,
 } from 'antd';
+import md5 from 'js-md5'
 
 import {
   UserOutlined,
@@ -38,6 +38,7 @@ class LoginPage extends React.Component {
   };
 
   loginHandler = values => {
+    values.password = md5(values.password);
     this.props.dispatch(userLogin(values, () => {
       message.success('登录成功!');
       this.props.history.replace("/");
@@ -55,14 +56,14 @@ class LoginPage extends React.Component {
             欢迎，权限DEMO
           </Typography.Title>
           <Form ref={this.state.form} onFinish={this.loginHandler}>
-            <Form.Item name={"username"} initialValue={"manager"} rules={[{required: true, message: '请输入登录账号!'}]}>
+            <Form.Item name={"username"} initialValue={"test01"} rules={[{required: true, message: '请输入登录账号!'}]}>
               <Input
                 autoComplete={"off"}
                 prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder="账号"
               />
             </Form.Item>
-            <Form.Item name={'password'} initialValue={"password"} rules={[{required: true, message: '请输入账号密码!'}]}>
+            <Form.Item name={'password'} initialValue={"123456"} rules={[{required: true, message: '请输入账号密码!'}]}>
               <Input
                 prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password"
@@ -71,7 +72,6 @@ class LoginPage extends React.Component {
             </Form.Item>
             <Form.Item>
               <div style={{marginBottom: '8px'}}>
-                <Checkbox name={'remember'}>记住我</Checkbox>
                 <a href="/#" className={"right"} onClick={(e) => {
                   e.preventDefault();
                   message.info('请联系管理员')
@@ -82,13 +82,6 @@ class LoginPage extends React.Component {
               <Button loading={this.props.user.loading} block type="primary" htmlType="submit">
                 登录
               </Button>
-              <br/>
-              <div style={{marginBottom: '8px'}}>
-                或 <a href="/#" onClick={(e) => {
-                e.preventDefault();
-                this.props.history.push("/register")
-              }}>注册!</a>
-              </div>
             </Form.Item>
           </Form>
         </div>

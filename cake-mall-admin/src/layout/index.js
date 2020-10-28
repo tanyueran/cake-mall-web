@@ -16,7 +16,6 @@ import {
   Col,
   Dropdown,
   Menu,
-  Tooltip,
 } from 'antd';
 
 import {
@@ -24,15 +23,15 @@ import {
   CaretDownOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  QuestionCircleOutlined,
 } from '@ant-design/icons'
 
 import MNav from '../component/MNav.js';
 
-import '../pages/home/index.scss';
+import './index.scss';
 import {pullUserInfo} from "../store/user/action";
 
 import logo from '../assets/images/logo.jpg';
+import {previewFile} from "../api/commom";
 
 
 class IndexPage extends React.Component {
@@ -63,6 +62,10 @@ class IndexPage extends React.Component {
     this.props.dispatch(del_user());
     this.props.history.replace("/login");
   };
+
+  componentWillUnmount() {
+    this.setState = () => false;
+  }
 
   componentDidMount() {
     // 判断是否登录
@@ -101,15 +104,18 @@ class IndexPage extends React.Component {
                 }
               </Col>
               <Col push={8} span={4} style={{justifyContent: 'center', display: 'flex', alignItems: 'center'}}>
-                <Tooltip title={"使用说明"}>
-                  <QuestionCircleOutlined style={{fontSize: '18px'}}/>
-                </Tooltip>
                 {/*头像*/}
-                <Avatar style={{margin: "0 1em"}} size={"small"} icon={<UserOutlined/>}/>
+                {
+                  this.props.user.userInfo.data.headImg ?
+                    <Avatar src={previewFile(this.props.user.userInfo.data.headImg)}
+                            style={{margin: "0 1em"}}
+                            size={"large "}/> :
+                    <Avatar style={{margin: "0 1em"}} size={"large "} icon={<UserOutlined/>}/>
+                }
                 <Dropdown overlay={
                   <Menu theme={"light"}>
                     <Menu.Item onClick={() => {
-                      this.props.history.push('/home/personCenter/personInfo')
+                      this.props.history.push('/home/personInfo')
                     }}>个人中心</Menu.Item>
                     <Menu.Item onClick={this.logoutHandler}>退出</Menu.Item>
                   </Menu>
@@ -141,7 +147,7 @@ class IndexPage extends React.Component {
             }
           </Layout.Content>
           <Layout.Footer className={"text-center"} style={{margin: "0 10px",}}>
-            唯有阳光和绿茶最搭了！
+            ©2020
           </Layout.Footer>
         </Layout>
       </Layout>

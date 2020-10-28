@@ -7,7 +7,7 @@ const {Title, Paragraph, Text} = Typography;
 /**
  * 网站的用户协议文字
  */
-export default class MSiteAgreement extends React.Component {
+class MSiteAgreement extends React.Component {
   render() {
     return <Typography style={{height: '400px', overflow: 'auto'}}>
       <Title>Introduction</Title>
@@ -35,3 +35,5 @@ export default class MSiteAgreement extends React.Component {
     </Typography>
   }
 }
+
+export default MSiteAgreement

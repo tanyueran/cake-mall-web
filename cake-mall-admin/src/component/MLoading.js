@@ -17,5 +17,7 @@ let style = {
   justifyContent: 'center',
 };
 
-export default () => <Spin delay={300} style={style} size={"large"}/>
+const loading = () => <Spin delay={300} style={style} size={"large"}/>;
+
+export default loading;
 

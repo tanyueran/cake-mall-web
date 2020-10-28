@@ -7,10 +7,10 @@ import request from '../utils/request.js';
 import {API} from '../constant/index.js';
 
 const api = {
-  login: `/${API}/login`,
-  register: `/${API}/user/register`,
+  login: `/${API}/admin/user/login`,
+  register: `/${API}/admin/user/register`,
   // 获取用户信息
-  getUserInfo: `/${API}/user/getUserInfo`,
+  getUserInfo: `/${API}/admin/user/getInfo`,
 };
 
 // 用户登录

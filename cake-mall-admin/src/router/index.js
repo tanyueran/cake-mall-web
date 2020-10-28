@@ -9,16 +9,11 @@ const LoginPageUrl = () => import('../pages/login/index.js');
 
 const notFoundPageUrl = () => import('../pages/notFound/index.js');
 
-export default [
+const routers = [
   {
     path: '/login',
     exact: true,
     component: MLoading(LoginPageUrl),
-  },
-  {
-    path: '/register',
-    exact: true,
-    component: MLoading(() => import('../pages/register/index.js')),
   },
   {
     component: MLoading(() => import('../layout/index.js')),
@@ -30,6 +25,32 @@ export default [
         component: MLoading(() => import('../pages/home/index/index.js')),
       },
       {
+        path: '/home/cakeManager',
+        exact: true,
+        component: MLoading(() => import('../pages/home/cakeManager/index.js')),
+      },
+      {
+        path: '/home/orderManager',
+        exact: true,
+        component: MLoading(() => import('../pages/home/orderManager/index.js')),
+      },
+      {
+        path: '/home/personInfo',
+        exact: true,
+        component: MLoading(() => import('../pages/home/personInfo/index.js')),
+      },
+      {
+        path: '/home/roleManager',
+        exact: true,
+        component: MLoading(() => import('../pages/home/roleManager/index.js')),
+      },
+      {
+        path: '/home/userManager',
+        exact: true,
+        component: MLoading(() => import('../pages/home/userManager/index.js')),
+      },
+
+      {
         path: '/home/404',
         component: MLoading(notFoundPageUrl),
       },
@@ -38,4 +59,6 @@ export default [
   {
     component: MLoading(notFoundPageUrl),
   }
-]
+];
+
+export default routers;

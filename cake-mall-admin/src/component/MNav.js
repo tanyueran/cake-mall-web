@@ -35,30 +35,26 @@ class MNav extends React.Component {
         <IconFont style={fontStyle} type={'myiconshouye'}/>
         <span>首页</span>
       </Menu.Item>
-      <Menu.SubMenu key="sub" icon={<IconFont style={fontStyle} type={'myicongongzuotaishouye'}/>} title="个人中心">
-        <Menu.Item key="/home/personCenter/personInfo">
-          <IconFont style={fontStyle} type={'myiconzichanxinxibuquancelve'}/>
-          <span>个人信息</span>
-        </Menu.Item>
-      </Menu.SubMenu>
-      {/*遍历获取到的数据*/}
-      {
-        this.props.user.menu.map(item => {
-          return <Menu.SubMenu
-            key={item.menuCode}
-            icon={<IconFont style={fontStyle} type={(item.menuIcon || 'myiconmobanguanli')}/>}
-            title={item.menuName}>
-            {
-              item.children.map(item2 => {
-                return <Menu.Item key={item2.menuUrl}>
-                  <IconFont style={fontStyle} type={(item2.menuIcon || 'myiconmobanguanli')}/>
-                  <span>{item2.menuName}</span>
-                </Menu.Item>
-              })
-            }
-          </Menu.SubMenu>
-        })
-      }
+      <Menu.Item key="/home/personInfo">
+        <IconFont style={fontStyle} type={'myiconyonghuzhuzhanghaoguanli'}/>
+        <span>个人信息</span>
+      </Menu.Item>
+      <Menu.Item key="/home/roleManager">
+        <IconFont style={fontStyle} type={'myiconzichanxinxibuquancelve'}/>
+        <span>角色管理</span>
+      </Menu.Item>
+      <Menu.Item key="/home/userManager">
+        <IconFont style={fontStyle} type={'myiconmingdanzixuexi'}/>
+        <span>用户管理</span>
+      </Menu.Item>
+      <Menu.Item key="/home/cakeManager">
+        <IconFont style={fontStyle} type={'myiconfangwenkongzhicelve'}/>
+        <span>蛋糕管理</span>
+      </Menu.Item>
+      <Menu.Item key="/home/orderManager">
+        <IconFont style={fontStyle} type={'myiconbaobiao'}/>
+        <span>订单管理</span>
+      </Menu.Item>
     </Menu>
   }
 }
