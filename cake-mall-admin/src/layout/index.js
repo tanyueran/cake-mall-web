@@ -109,8 +109,8 @@ class IndexPage extends React.Component {
                   this.props.user.userInfo.data.headImg ?
                     <Avatar src={previewFile(this.props.user.userInfo.data.headImg)}
                             style={{margin: "0 1em"}}
-                            size={"large "}/> :
-                    <Avatar style={{margin: "0 1em"}} size={"large "} icon={<UserOutlined/>}/>
+                            size={"large"}/> :
+                    <Avatar style={{margin: "0 1em"}} size={"large"} icon={<UserOutlined/>}/>
                 }
                 <Dropdown overlay={
                   <Menu theme={"light"}>

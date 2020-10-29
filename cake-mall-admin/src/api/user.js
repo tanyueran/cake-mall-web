@@ -11,6 +11,10 @@ const api = {
   register: `/${API}/admin/user/register`,
   // 获取用户信息
   getUserInfo: `/${API}/admin/user/getInfo`,
+  // 更新用户信息
+  updateUserInfo: `/${API}/admin/user/edit`,
+  // 更新密码
+  updatePwd: `/${API}/admin/user/updatePwd`,
 };
 
 // 用户登录
@@ -35,6 +39,24 @@ export async function register(data) {
   return request({
     method: 'post',
     url: api.register,
+    data,
+  })
+}
+
+// 编辑用户信息
+export async function updateUserInfo(data) {
+  return request({
+    method: 'put',
+    url: api.updateUserInfo,
+    data,
+  })
+}
+
+// 更新用户密码
+export async function updatePwd(data) {
+  return request({
+    method: 'post',
+    url: api.updatePwd,
     data,
   })
 }

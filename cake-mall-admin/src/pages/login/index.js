@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
       <div className={"login-wrapper"}>
         <div className='login-content'>
           <Typography.Title>
-            欢迎，权限DEMO
+            蛋糕管理系统
           </Typography.Title>
           <Form ref={this.state.form} onFinish={this.loginHandler}>
             <Form.Item name={"username"} initialValue={"test01"} rules={[{required: true, message: '请输入登录账号!'}]}>
@@ -78,6 +78,7 @@ class LoginPage extends React.Component {
                 }}>
                   忘记密码
                 </a>
+                <br/>
               </div>
               <Button loading={this.props.user.loading} block type="primary" htmlType="submit">
                 登录
