@@ -11,6 +11,8 @@ const api = {
   queryRolesByPage: `/${API}/admin/role/getByPage`,
   // 新增角色
   addRole: `/${API}/admin/role/add`,
+  // 编辑角色
+  editRole: `/${API}/admin/role/update`,
   // 删除角色
   deleteRole: `/${API}/admin/role/delete`,
 };
@@ -30,6 +32,15 @@ export async function addRole(data) {
   return request({
     method: 'post',
     url: api.addRole,
+    data,
+  })
+}
+
+// 编辑角色
+export async function editRole(data) {
+  return request({
+    method: 'put',
+    url: api.editRole,
     data,
   })
 }

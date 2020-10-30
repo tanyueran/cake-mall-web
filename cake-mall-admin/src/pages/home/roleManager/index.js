@@ -15,8 +15,10 @@ import {
   message,
   Popconfirm,
 } from 'antd';
+
 import {
   DeleteOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 
 import style from "./index.module.scss";
@@ -25,6 +27,7 @@ import {
   addRole,
   queryRolesByPage,
   deleteRole,
+  editRole,
 } from '../../../api/role';
 import {getKey} from "../../../api/commom";
 
@@ -78,6 +81,23 @@ class RoleManagerPage extends React.Component {
           >
             <Button danger icon={<DeleteOutlined/>} size={"small"}>删除</Button>
           </Popconfirm>
+
+          <Button onClick={() => {
+            this.setState(state => {
+              return {
+                modalObj: {
+                  ...state.modalObj,
+                  show: true,
+                  edit: true,
+                  initObj: {
+                    ...data,
+                  }
+                }
+              }
+            }, () => {
+              this.state.form.current.resetFields();
+            })
+          }} style={{marginLeft: '10px'}} icon={<EditOutlined/>} size={"small"}>编辑</Button>
         </div>
       }
     }
@@ -105,6 +125,7 @@ class RoleManagerPage extends React.Component {
       // 是否编辑
       edit: false,
       initObj: {
+        id: '',
         roleCode: '',
         roleName: '',
         remark: '',
@@ -170,23 +191,43 @@ class RoleManagerPage extends React.Component {
   // 模态框保存回调
   modalOkHandler = () => {
     this.state.form.current.validateFields().then(data => {
-      data.id = this.state.id;
-      addRole(data).then(res => {
-        if (res) {
-          message.success("保存成功");
-          this.setState(state => {
-            return {
-              id: '',
-            }
-          }, () => {
-            this.modalCancelHandler();
-            this.getPrimaryKey();
-            this.query();
-          })
-        }
-      }).catch(err => {
+      if (this.state.modalObj.edit === false) {
+        data.id = this.state.id;
+        addRole(data).then(res => {
+          if (res) {
+            message.success("保存成功");
+            this.setState(state => {
+              return {
+                id: '',
+              }
+            }, () => {
+              this.modalCancelHandler();
+              this.getPrimaryKey();
+              this.query();
+            })
+          }
+        }).catch(err => {
 
-      })
+        })
+      } else {
+        data.id = this.state.modalObj.initObj.id;
+        editRole(data).then(res => {
+          if (res) {
+            message.success("保存成功");
+            this.setState(state => {
+              return {
+                id: '',
+              }
+            }, () => {
+              this.modalCancelHandler();
+              this.getPrimaryKey();
+              this.query();
+            })
+          }
+        }).catch(err => {
+
+        })
+      }
     }).catch(err => {
 
     })
@@ -194,7 +235,6 @@ class RoleManagerPage extends React.Component {
 
   // 模态框取消回调
   modalCancelHandler = () => {
-    this.state.form.current.resetFields();
     this.setState(state => {
       return {
         modalObj: {
@@ -202,12 +242,15 @@ class RoleManagerPage extends React.Component {
           show: false,
           edit: false,
           initObj: {
+            id: '',
             roleCode: '',
             roleName: '',
             remark: '',
           }
         }
       }
+    }, () => {
+      this.state.form.current.resetFields();
     })
   };
 
