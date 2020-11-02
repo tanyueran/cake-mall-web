@@ -47,6 +47,10 @@ class MNav extends React.Component {
         <IconFont style={fontStyle} type={'myiconmingdanzixuexi'}/>
         <span>用户管理</span>
       </Menu.Item>
+      <Menu.Item key="/home/categoriesManager">
+        <IconFont style={fontStyle} type={'myiconzuzhijigou'}/>
+        <span>蛋糕类型管理</span>
+      </Menu.Item>
       <Menu.Item key="/home/cakeManager">
         <IconFont style={fontStyle} type={'myiconfangwenkongzhicelve'}/>
         <span>蛋糕管理</span>

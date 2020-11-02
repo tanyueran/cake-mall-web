@@ -49,6 +49,11 @@ const routers = [
         exact: true,
         component: MLoading(() => import('../pages/home/userManager/index.js')),
       },
+      {
+        path: '/home/categoriesManager',
+        exact: true,
+        component: MLoading(() => import('../pages/home/categoryManager/index.js')),
+      },
 
       {
         path: '/home/404',
