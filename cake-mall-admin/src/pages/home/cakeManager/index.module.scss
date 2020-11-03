@@ -1,8 +1,16 @@
 .cake-manager-page-content {
 	background: #fff;
 	padding: 20px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .search-wrapper {
 	margin-bottom: 15px;
+}
+
+.modal-content {
+	height: 45vh;
+	overflow-y: auto;
+	padding-right: 10px;
 }

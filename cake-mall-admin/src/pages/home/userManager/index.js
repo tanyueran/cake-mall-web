@@ -68,6 +68,14 @@ class UserManagerPage extends React.Component {
       key: 'nickname',
     },
     {
+      title: '角色',
+      dataIndex: 'cakeUserRole',
+      key: 'cakeUserRole',
+      render(data) {
+        return data.roleName;
+      }
+    },
+    {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
@@ -183,6 +191,8 @@ class UserManagerPage extends React.Component {
     },
     // 关键字
     keyword: '',
+    // 角色
+    cakeUserRoleId: [],
     // 状态
     status: [],
     // 表格数据
@@ -253,6 +263,7 @@ class UserManagerPage extends React.Component {
     let data = {
       keyword: this.state.keyword,
       status: this.state.status,
+      cakeUserRoleId: this.state.cakeUserRoleId,
       page: this.state.pagination.current,
       size: this.state.pagination.pageSize,
     };
@@ -382,12 +393,13 @@ class UserManagerPage extends React.Component {
   render() {
     return <div className={style['user-manager-page-content']}>
       <Row className={style['search-wrapper']}>
-        <Col span={16}>
+        <Col span={20}>
           <Form
             layout={"inline"}
             name="basic"
             onFinish={(data) => {
               this.setState({
+                cakeUserRoleId: data.cakeUserRoleId,
                 keyword: data.keyword,
                 status: data.status,
               }, () => {
@@ -414,6 +426,17 @@ class UserManagerPage extends React.Component {
                 </Checkbox>
               </Checkbox.Group>
             </Form.Item>
+            <Form.Item label="角色" name="cakeUserRoleId">
+              <Checkbox.Group>
+                {
+                  this.state.allRole.map(item => {
+                    return <Checkbox key={item.id} value={item.id}>
+                      {item.roleName}
+                    </Checkbox>
+                  })
+                }
+              </Checkbox.Group>
+            </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 搜索
@@ -421,7 +444,7 @@ class UserManagerPage extends React.Component {
             </Form.Item>
           </Form>
         </Col>
-        <Col span={8} className={"text-right"}>
+        <Col span={4} className={"text-right"}>
           <Button onClick={() => {
             this.setState(state => {
               return {
@@ -447,6 +470,7 @@ class UserManagerPage extends React.Component {
           pageSizeOptions: [10, 20, 30, 50],
           showSizeChanger: true,
           showQuickJumper: true,
+          current: this.state.pagination.current,
           onChange: this.changeHandler,
         }}
         columns={this.columns}/>

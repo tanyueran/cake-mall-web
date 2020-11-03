@@ -20,6 +20,7 @@ import {
   Modal,
   Select,
   Upload,
+  Tag,
 } from 'antd';
 
 import {
@@ -56,6 +57,7 @@ class CakeMangerPage extends React.Component {
       title: '蛋糕名称',
       dataIndex: 'name',
       key: 'name',
+      width: "200px",
       render(data, record) {
         return <Button type={"link"} onClick={() => {
           notification.open({
@@ -89,8 +91,10 @@ class CakeMangerPage extends React.Component {
       title: '是否推荐',
       dataIndex: 'recommendStatus',
       key: 'recommendStatus',
+      width: '100px',
+      align: 'center',
       render(data) {
-        return data === 0 ? '不推荐' : '推荐';
+        return data === 0 ? <Tag color={""}>不推荐</Tag> : <Tag color={"#f50"}>推荐</Tag>;
       }
     },
     {
@@ -107,10 +111,12 @@ class CakeMangerPage extends React.Component {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      width: "200px",
     },
     {
       title: '操作',
       align: 'center',
+      width: "200px",
       render: (data) => {
         return <div>
           <Popconfirm
@@ -174,6 +180,8 @@ class CakeMangerPage extends React.Component {
     },
     // 关键字
     keyword: '',
+    // 分类集合
+    categoriesId: [],
     // 表格数据
     dataSource: [],
     // 模态框ref
@@ -189,7 +197,7 @@ class CakeMangerPage extends React.Component {
         id: '',
         name: '',
         cakeImgs: '',
-        cakeProductCategoriesId: '',
+        cakeProductCategoriesId: null,
         recommendStatus: '',
         detail: '',
         price: '',
@@ -220,18 +228,19 @@ class CakeMangerPage extends React.Component {
       loading: true,
     });
     let data = {
-      keyword: this.state.keyword,
+      keywords: this.state.keyword,
+      categoriesId: this.state.categoriesId,
       page: this.state.pagination.current,
       size: this.state.pagination.pageSize,
     };
-    getCakesByPage(data).then(data => {
+    getCakesByPage(data).then(res => {
       this.setState(state => {
         return {
           pagination: {
             ...state.pagination,
-            total: data.total,
+            total: res.total,
           },
-          dataSource: data.records,
+          dataSource: res.records,
         }
       });
     }).catch(err => {
@@ -320,7 +329,7 @@ class CakeMangerPage extends React.Component {
           initObj: {
             name: '',
             cakeImgs: '',
-            cakeProductCategoriesId: '',
+            cakeProductCategoriesId: null,
             recommendStatus: '',
             detail: '',
             price: '',
@@ -332,6 +341,22 @@ class CakeMangerPage extends React.Component {
       this.state.form.current.resetFields();
     })
   };
+
+  // 表格分页改变
+  changeHandler = (page, pageSize) => {
+    this.setState(state => {
+      return {
+        pagination: {
+          ...state.pagination,
+          current: page,
+          pageSize: pageSize,
+        }
+      }
+    }, () => {
+      this.query();
+    });
+  };
+
 
   // 删除头像
   removeImgHandler = (data) => {
@@ -384,8 +409,15 @@ class CakeMangerPage extends React.Component {
             layout={"inline"}
             name="basic"
             onFinish={(data) => {
-              this.setState({
-                keyword: data.keyword,
+              this.setState(state => {
+                return {
+                  keyword: data.keyword,
+                  categoriesId: data.categoriesId,
+                  pagination: {
+                    ...state.pagination,
+                    current: 1,
+                  }
+                }
               }, () => {
                 this.query();
               });
@@ -397,7 +429,7 @@ class CakeMangerPage extends React.Component {
             >
               <Input autoComplete={"off"} placeholder={"请输入"}/>
             </Form.Item>
-            <Form.Item label="种类" name="categories">
+            <Form.Item label="种类" name="categoriesId">
               <Checkbox.Group>
                 {
                   this.state.categories.map(item => {
@@ -441,6 +473,7 @@ class CakeMangerPage extends React.Component {
           pageSizeOptions: [10, 20, 30, 50],
           showSizeChanger: true,
           showQuickJumper: true,
+          current: this.state.pagination.current,
           onChange: this.changeHandler,
         }}
         columns={this.columns}/>
@@ -452,7 +485,7 @@ class CakeMangerPage extends React.Component {
         onOk={this.modalOkHandler}
         onCancel={this.modalCancelHandler}
       >
-        <div style={{height: '45vh', overflowY: 'auto',}}>
+        <div className={style['modal-content']}>
           <Form
             {
               ...{
@@ -463,7 +496,7 @@ class CakeMangerPage extends React.Component {
             name="form"
             ref={this.state.form}
           >
-            <Form.Item label={"头像"}>
+            <Form.Item label={"蛋糕图片"} rules={[{required: true, message: '蛋糕图片不可为空',}]}>
               <Upload
                 customRequest={this.uploadImgHandler}
                 listType="picture-card"
@@ -480,7 +513,10 @@ class CakeMangerPage extends React.Component {
             >
               <Input autoComplete={"off"} placeholder={"请输入"}/>
             </Form.Item>
-            <Form.Item label={"类型"} name="cakeProductCategoriesId">
+            <Form.Item
+              label={"类型"}
+              name="cakeProductCategoriesId"
+              rules={[{required: true, message: '蛋糕图片不可为空',}]}>
               <Select placeholder="请选择类型" allowClear>
                 {
                   this.state.categories.map(data =>
@@ -489,9 +525,6 @@ class CakeMangerPage extends React.Component {
                       value={data.id}>{data.name}</Select.Option>)
                 }
               </Select>
-            </Form.Item>
-            <Form.Item label="是否推荐" name="recommendStatus" valuePropName="checked">
-              <Checkbox>推荐</Checkbox>
             </Form.Item>
             <Form.Item
               label="详情说明"
@@ -506,6 +539,9 @@ class CakeMangerPage extends React.Component {
               rules={[{required: true, message: '价格不可为空'}]}
             >
               <Input autoComplete={"off"} placeholder={"请输入"}/>
+            </Form.Item>
+            <Form.Item label="是否推荐" name="recommendStatus" valuePropName="checked">
+              <Checkbox>推荐</Checkbox>
             </Form.Item>
             <Form.Item
               label="备注"

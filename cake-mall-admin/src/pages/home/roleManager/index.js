@@ -317,6 +317,7 @@ class RoleManagerPage extends React.Component {
           pageSizeOptions: [10, 20, 30, 50],
           showSizeChanger: true,
           showQuickJumper: true,
+          current: this.state.pagination.current,
           onChange: this.changeHandler,
         }}
         columns={this.columns}/>
