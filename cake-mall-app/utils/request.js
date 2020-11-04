@@ -9,8 +9,8 @@ function request(obj) {
 				token: token ? token : '',
 			},
 			success(res) {
-				if (res.data.status === 200) {
-					resolve(res.data);
+				if (res.data.code === 200) {
+					resolve(res.data.data);
 				} else {
 					uni.showToast({
 						icon: 'none',

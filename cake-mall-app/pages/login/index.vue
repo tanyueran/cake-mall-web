@@ -60,11 +60,13 @@
 						username: this.username,
 						password: md5(this.password),
 					}).then(res => {
-						console.log(res);
+						this.$store.commit("setToken", res);
+						uni.switchTab({
+							url: '/pages/index/index'
+						});
 					}).catch((err) => {
 						this.username = "";
 						this.password = "";
-						console.log(err);
 					})
 				} else {
 					uni.showToast({

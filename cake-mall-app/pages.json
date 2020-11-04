@@ -15,7 +15,7 @@
 		{
 			"path": "pages/register/index",
 			"style": {
-				"navigationBarTitleText": "注册"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -64,8 +64,9 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "蛋糕商城",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": true
 	}
 }
