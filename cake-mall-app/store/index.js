@@ -41,17 +41,25 @@ const store = new Vuex.Store({
 		}) {
 			refreshToken().then(res => {
 				commit("setToken", res);
-			}).catch(err => {
-			})
+			}).catch(err => {})
 		},
 		getUserInof({
 			commit
 		}) {
 			getUserInfo().then(res => {
-				commit("setUserInfo",res);
+				commit("setUserInfo", res);
 			}).catch(err => {
 
 			})
+		},
+		logout({
+			commit
+		}) {
+			commit("setToken", "");
+			commit("setUserInfo", {});
+			uni.redirectTo({
+				url: '/pages/login/index'
+			});
 		}
 	}
 });

@@ -6,6 +6,10 @@
 				{{nickname}}
 			</view>
 		</view>
+		<uni-list>
+			<uni-list-item title="通知" clickable :show-badge="true" badge-text="12"></uni-list-item>
+			<uni-list-item title="退出登录" link @click="logoutHanlder"></uni-list-item>
+		</uni-list>
 	</view>
 </template>
 
@@ -36,7 +40,12 @@
 
 			}
 		},
-		methods: {}
+		methods: {
+			// 退出登录
+			logoutHanlder() {
+				this.$store.dispatch("logout");
+			}
+		}
 	}
 </script>
 
@@ -45,9 +54,9 @@
 		display: flex;
 		align-items: center;
 		background-color: #3F4552;
-		padding:80rpx 40rpx;
+		padding: 80rpx 40rpx;
 		text-align: center;
-		color:#fff;
+		color: #fff;
 
 		image {
 			height: 160rpx;

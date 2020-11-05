@@ -3,13 +3,15 @@
 		onLaunch: function() {
 			console.log('App Launch')
 		},
-		onShow: function() {
+		onShow: function(options) {
 			console.log('App Show');
 			// 判断是否登录
 			if (this.$store.getters.getToken == "") {
-				uni.reLaunch({
-					url: '/pages/login/index'
-				});
+				if (options.path != "pages/register/index") {
+					uni.reLaunch({
+						url: '/pages/login/index'
+					});
+				}
 			} else {
 				this.$store.dispatch("refreshToken");
 				this.$store.dispatch("getUserInof");
@@ -17,6 +19,9 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		onError: function(err) {
+			console.log(err);
 		}
 	}
 </script>

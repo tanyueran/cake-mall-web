@@ -84,3 +84,13 @@ $uni-font-size-paragraph:30rpx;
 .text-right{
 	text-align: right;
 }
+
+*{
+	box-sizing: border-box;
+	&:before{
+		box-sizing: border-box;
+	}
+	&:after{
+		box-sizing: border-box;
+	}
+}

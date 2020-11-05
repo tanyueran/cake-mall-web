@@ -4,10 +4,11 @@
 			<uni-search-bar style="width: 100%;" :radius="100" @cancel="searchHandler('')" @confirm="searchHandler"></uni-search-bar>
 		</view>
 		<view class="scroll-wrapper">
-			<view class="item-wrapper" v-for="(item,index) in dataList" :key="item.id">
-				<image :src="getUrl(item.cakeImgs)" mode="aspectFill"></image>
+			<view class="item-wrapper" v-for="(item,index) in dataList" :key="item.id" @click="gotoDetailHandler(item.id)">
+				<image :lazy-load="true" :src="getUrl(item.cakeImgs)" mode="aspectFit"></image>
 				<view class="info-wrapper">
 					<view class="name">
+						<view v-if="item.recommendStatus === 1" class="iconfont icon-hotfill"></view>
 						{{item.name}}
 					</view>
 					<view class="price">
@@ -15,12 +16,14 @@
 					</view>
 				</view>
 			</view>
+			<uni-load-more style="width: 100%;" :status="more"></uni-load-more>
 		</view>
 	</view>
 </template>
 
 <script>
 	import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue'
+	import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue"
 	import {
 		getCake,
 	} from "../../api/cake.js"
@@ -36,40 +39,55 @@
 					size: 10,
 					total: 0,
 				},
+				more: 'more', //more（loading前）、loading（loading中）、noMore（没有更多了）
 				dataList: [],
-				more: 'more',
 			}
 		},
 		components: {
 			uniSearchBar,
+			uniLoadMore,
 		},
 		onLoad() {
 			this.pageQuery();
 		},
 		onPullDownRefresh() {
-			console.log("执行了下拉")
 			this.pageObj.current = 1;
 			this.pageQuery();
 		},
-		onReachBottom(){
-			console.log("执行了上拉")
-			this.pageObj.current ++;
+		onReachBottom() {
+			if (this.more === "noMore") {
+				return;
+			}
+			this.pageObj.current++;
 			this.pageQuery();
 		},
 		methods: {
 			// 搜索
 			searchHandler(keywords) {
-				console.log(keywords);
+				this.pageObj.keywords = keywords.value;
+				this.pageObj.current = 1;
+				this.pageQuery();
 			},
 			// 分页查询
 			pageQuery() {
+				this.more = "loading";
 				getCake({
 					page: this.pageObj.current,
 					size: this.pageObj.size,
 					keywords: this.pageObj.keywords,
 				}).then(res => {
-					this.pageObj.total = res.tota;
-					this.dataList = res.records;
+					this.pageObj.total = res.total;
+					if (this.pageObj.current === 1) {
+						this.dataList = res.records;
+					} else {
+						this.dataList.push(...res.records);
+					}
+					if (this.pageObj.total === this.dataList.length) {
+						this.more = "noMore";
+					} else {
+						this.more = "more";
+					}
+					uni.stopPullDownRefresh();
 				}).catch(err => {
 
 				});
@@ -78,6 +96,12 @@
 			getUrl(fileId) {
 				return previewFile(fileId);
 			},
+			// 查看详情
+			gotoDetailHandler(id) {
+				uni.navigateTo({
+					url: `/pages/detail/index?id=${id}`,
+				});
+			},
 		}
 	}
 </script>
@@ -85,16 +109,21 @@
 <style lang="scss">
 	.content {
 		display: flex;
-		height: 100%;
 		flex-direction: column;
+		padding-bottom: var(--window-bottom);
+		padding-top: 100rpx;
+		position: relative;
 
 		.search-wrapper {
+			position: fixed;
+			top: var(--window-top);
+			left: 0;
+			right: 0;
+			z-index: 100;
 			height: 100rpx;
-			width: 100%;
 			display: flex;
 			background-color: #fff;
-			position: relative;
-			z-index: 1000;
+			z-index: 10;
 			align-items: center;
 			box-shadow: 0 2rpx 2rpx #909090;
 		}
@@ -102,21 +131,39 @@
 		.scroll-wrapper {
 			flex: 1;
 			overflow: auto;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			background-color: #f0f0f0;
+			padding-top: 20rpx;
 		}
 
 		.item-wrapper {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			border: 1rpx solid #909090;
-			padding: 20rpx;
-			margin: 10rpx;
-			margin-bottom: 10rpx;
+			width: 45vw;
+			margin: 2.5vw;
+			background-color: #fff;
+			border-radius: 10rpx;
+			padding: 10rpx 10rpx 20rpx;
+			height: 30vh;
+
+			image {
+				width: 90%;
+			}
 
 			.info-wrapper {
 				display: flex;
 				align-items: center;
 				justify-content: center;
+
+				.name {
+					.iconfont {
+						display: inline-block;
+						color: red;
+					}
+				}
 
 				.price {
 					color: orange;

@@ -3,7 +3,9 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "蛋糕商城"
+				"navigationBarTitleText": "蛋糕商城",
+				"onReachBottomDistance": 50,
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -66,7 +68,6 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "蛋糕商城",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
-		"enablePullDownRefresh": true
+		"backgroundColor": "#F8F8F8"
 	}
 }

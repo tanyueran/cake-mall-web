@@ -18,9 +18,9 @@
 					忘记密码
 				</view>
 				<view class="text-center login-btn-wrapper">
-					<button type="default" @click="loginHandler">登录</button>
+					<button :loading="loading" type="default" @click="loginHandler">登录</button>
 				</view>
-				<view class="text-center register-wrapper">
+				<view class="text-center register-wrapper" @click="registerHandler">
 					注册账号
 				</view>
 			</view>
@@ -39,6 +39,7 @@
 			return {
 				username: '',
 				password: '',
+				loading: false,
 			}
 		},
 		onLoad() {
@@ -56,6 +57,7 @@
 			// 登录
 			loginHandler() {
 				if (this.username && this.password) {
+					this.loading = true;
 					login({
 						username: this.username,
 						password: md5(this.password),
@@ -67,6 +69,8 @@
 					}).catch((err) => {
 						this.username = "";
 						this.password = "";
+					}).finally(() => {
+						this.loading = false;
 					})
 				} else {
 					uni.showToast({
@@ -74,6 +78,12 @@
 						title: '账号密码不可为空',
 					})
 				}
+			},
+			// 注册
+			registerHandler() {
+				uni.reLaunch({
+					url: '/pages/register/index',
+				})
 			},
 		}
 	}
