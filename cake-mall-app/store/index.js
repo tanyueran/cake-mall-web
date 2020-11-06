@@ -43,7 +43,7 @@ const store = new Vuex.Store({
 				commit("setToken", res);
 			}).catch(err => {})
 		},
-		getUserInof({
+		getUserInfo({
 			commit
 		}) {
 			getUserInfo().then(res => {
@@ -55,10 +55,12 @@ const store = new Vuex.Store({
 		logout({
 			commit
 		}) {
-			commit("setToken", "");
-			commit("setUserInfo", {});
-			uni.redirectTo({
-				url: '/pages/login/index'
+			uni.reLaunch({
+				url: '/pages/login/index',
+				success() {
+					commit("setToken", "");
+					commit("setUserInfo", {});
+				}
 			});
 		}
 	}

@@ -13,6 +13,12 @@ const api = {
 	register: `${API}/admin/user/register`,
 	// 获取用户信息
 	getUserInfo: `${API}/admin/user/getInfo`,
+	// 编辑用户信息
+	editUser: `${API}/admin/user/edit`,
+	// 更新密码
+	updatePwd: `${API}/admin/user/updatePwd`,
+	// 充值
+	addMoney: `${API}/admin/user/addMoney`,
 }
 
 // 用户登录
@@ -46,5 +52,32 @@ export function getUserInfo() {
 	return request({
 		url: api.getUserInfo,
 		method: 'get',
+	})
+}
+
+// 编辑用户信息
+export function editUser(data) {
+	return request({
+		method: 'put',
+		url: api.editUser,
+		data,
+	})
+}
+
+// 更新用户密码
+export function updatePwd(data) {
+	return request({
+		method: 'post',
+		url: api.updatePwd,
+		data,
+	})
+}
+
+// 充值
+export function addMoney(data) {
+	return request({
+		method: 'post',
+		url: api.addMoney,
+		data,
 	})
 }

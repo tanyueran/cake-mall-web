@@ -66,6 +66,7 @@
 						uni.switchTab({
 							url: '/pages/index/index'
 						});
+						this.$store.dispatch("getUserInfo");
 					}).catch((err) => {
 						this.username = "";
 						this.password = "";

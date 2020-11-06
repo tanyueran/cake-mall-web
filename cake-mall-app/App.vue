@@ -14,7 +14,7 @@
 				}
 			} else {
 				this.$store.dispatch("refreshToken");
-				this.$store.dispatch("getUserInof");
+				this.$store.dispatch("getUserInfo");
 			}
 		},
 		onHide: function() {

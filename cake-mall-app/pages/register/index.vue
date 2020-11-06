@@ -13,7 +13,7 @@
 							添加头像
 						</template>
 						<template v-else>
-							<image :src="previewImg(headImg)" mode="scaleToFill"></image>
+							<image :src="previewImg" mode="scaleToFill"></image>
 						</template>
 					</view>
 				</view>
@@ -66,6 +66,12 @@
 				userPwd: '',
 			}
 		},
+		computed: {
+			// 预览
+			previewImg() {
+				return previewFile(this.headImg);
+			},
+		},
 		methods: {
 			// 获取主键
 			getPrimarykey() {
@@ -78,10 +84,6 @@
 				uni.reLaunch({
 					url: '../login/index',
 				})
-			},
-			// 预览
-			previewImg(fileId) {
-				return previewFile(fileId);
 			},
 			// 选择头像
 			chooseHandler() {

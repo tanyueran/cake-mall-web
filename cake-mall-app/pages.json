@@ -21,7 +21,7 @@
 			}
 		},
 		{
-			"path": "pages/userCenter/index",
+			"path": "pages/my/index",
 			"style": {
 				"navigationBarTitleText": "蛋糕商城"
 			}
@@ -36,6 +36,24 @@
 			"path": "pages/detail/index",
 			"style": {
 				"navigationBarTitleText": "蛋糕详情"
+			}
+		},
+		{
+			"path": "pages/userCenter/index",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/userCenter/userInfo",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/userCenter/updatePwd",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		}
 	],
@@ -57,7 +75,7 @@
 				"text": "订单"
 			},
 			{
-				"pagePath": "pages/userCenter/index",
+				"pagePath": "pages/my/index",
 				"iconPath": "static/images/bar/my.png",
 				"selectedIconPath": "static/images/bar/my-active.png",
 				"text": "我的"
