@@ -16,7 +16,6 @@
 		</uni-list>
 
 		<uni-list>
-			<uni-list-item title="账户充值" link @click="addMoneyHandler"></uni-list-item>
 			<uni-list-item title="消息通知" clickable :show-badge="true" badge-text="12"></uni-list-item>
 		</uni-list>
 	</view>
@@ -58,35 +57,6 @@
 			toDetailHandler() {
 				uni.navigateTo({
 					url: '/pages/userCenter/index'
-				});
-			},
-			// 充值
-			addMoneyHandler() {
-				uni.showModal({
-					title: '提示',
-					content: '您确定充值1000元吗？',
-					success: (res) => {
-						if (res.confirm) {
-							addMoney({
-								cakeUserId: this.$store.state.userInfo.cakeUser.id,
-								money: "1000.05",
-							}).then(res => {
-								if (res) {
-									uni.showToast({
-										title: "充值成功",
-									});
-									this.$store.dispatch("getUserInfo");
-								} else {
-									uni.showToast({
-										icon: 'none',
-										title: '充值失败'
-									});
-								}
-							}).catch((err) => {
-								console.log(err);
-							})
-						} else if (res.cancel) {}
-					}
 				});
 			},
 		}

@@ -14,15 +14,16 @@ import {
   Col,
   Modal,
   message,
-  Popconfirm,
   Checkbox,
   Select,
   Tag,
+  Menu,
+  Dropdown,
 } from 'antd';
 
 import {
-  BgColorsOutlined,
   EditOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 
 import {
@@ -33,6 +34,7 @@ import {
   editUser,
   allRole,
   initPwd,
+  addMoney,
 } from "../../../api/user"
 import {getKey} from "../../../api/commom";
 
@@ -76,6 +78,11 @@ class UserManagerPage extends React.Component {
       }
     },
     {
+      title: '账户余额',
+      dataIndex: 'money',
+      key: 'money',
+    },
+    {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
@@ -100,64 +107,9 @@ class UserManagerPage extends React.Component {
     {
       title: '操作',
       align: 'center',
-      width: '300px',
+      width: '150px',
       render: (data) => {
         return this.props.user.userInfo.data.id !== data.id && <div>
-          {
-            data.status === 0 ? <Popconfirm
-                title="您确定冻结该用户吗?"
-                onConfirm={() => {
-                  freezeUser(data.id).then(res => {
-                    if (res) {
-                      message.success("操作成功");
-                      this.query();
-                    }
-                  })
-                }}
-                onCancel={() => {
-                }}
-                okText="确定"
-                cancelText="取消"
-              >
-                <Button danger icon={<BgColorsOutlined/>} size={"small"}>冻结</Button>
-              </Popconfirm> :
-              <Popconfirm
-                title="您确定解冻该用户吗?"
-                onConfirm={() => {
-                  unfreezeUser(data.id).then(res => {
-                    if (res) {
-                      message.success("操作成功");
-                      this.query();
-                    }
-                  })
-                }}
-                onCancel={() => {
-                }}
-                okText="确定"
-                cancelText="取消"
-              >
-                <Button danger icon={<BgColorsOutlined/>} size={"small"}>解冻</Button>
-              </Popconfirm>
-          }
-
-
-          <Popconfirm
-            title="您确定初始化该账号的密码吗?"
-            onConfirm={() => {
-              initPwd(data.id).then(res => {
-                if (res) {
-                  message.success("操作成功");
-                }
-              })
-            }}
-            onCancel={() => {
-            }}
-            okText="确定"
-            cancelText="取消"
-          >
-            <Button style={{marginLeft: '10px'}} icon={<BgColorsOutlined/>} size={"small"}>密码初始化</Button>
-          </Popconfirm>
-
           <Button onClick={() => {
             this.setState(state => {
               return {
@@ -173,7 +125,101 @@ class UserManagerPage extends React.Component {
             }, () => {
               this.state.form.current.resetFields();
             })
-          }} style={{marginLeft: '10px'}} icon={<EditOutlined/>} size={"small"}>编辑</Button>
+          }} style={{marginRight: '10px'}} icon={<EditOutlined/>} size={"small"}>编辑</Button>
+
+          <Dropdown overlay={
+            <Menu>
+              {
+                data.status === 0 ?
+                  <Menu.Item onClick={() => {
+                    Modal.confirm({
+                      title: '提示',
+                      content: '您确定冻结该账号',
+                      onOk: () => {
+                        freezeUser(data.id).then(res => {
+                          if (res) {
+                            message.success("操作成功");
+                            this.query();
+                          } else {
+                            message.error("操作失败");
+                          }
+                        })
+                      }
+                    })
+                  }}>冻结</Menu.Item> :
+                  <Menu.Item onClick={() => {
+                    Modal.confirm({
+                      title: '提示',
+                      content: '您确定解冻该账号',
+                      onOk: () => {
+                        unfreezeUser(data.id).then(res => {
+                          if (res) {
+                            message.success("操作成功");
+                            this.query();
+                          } else {
+                            message.error("操作失败");
+                          }
+                        })
+                      }
+                    })
+                  }}>解冻</Menu.Item>
+              }
+
+              <Menu.Item onClick={() => {
+                Modal.confirm({
+                  title: '充值',
+                  content: <div>
+                    充值500元
+                  </div>,
+                  onOk: () => {
+                    this.setState({
+                      loading: true,
+                    });
+                    addMoney({
+                      cakeUserId: data.id,
+                      money: 500,
+                    }).then(res => {
+                      if (res) {
+                        message.success("充值成功");
+                        this.query();
+                      } else {
+                        message.error("充值失败")
+                      }
+                    }).catch(err => {
+                      console.log(err);
+                    }).finally(() => {
+                      this.setState({
+                        loading: false,
+                      });
+                    })
+                  }
+                })
+              }}>
+                充值
+              </Menu.Item>
+
+              <Menu.Item onClick={() => {
+                Modal.confirm({
+                  title: '提示',
+                  content: '您确定初始化该账号的密码吗',
+                  onOk: () => {
+                    initPwd(data.id).then(res => {
+                      if (res) {
+                        message.success("操作成功");
+                      }
+                    })
+                  }
+                })
+              }}>
+                密码初始化
+              </Menu.Item>
+
+            </Menu>
+          }>
+            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              更多 <DownOutlined/>
+            </a>
+          </Dropdown>
         </div>
       }
     }

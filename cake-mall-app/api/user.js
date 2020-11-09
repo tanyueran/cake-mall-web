@@ -17,8 +17,6 @@ const api = {
 	editUser: `${API}/admin/user/edit`,
 	// 更新密码
 	updatePwd: `${API}/admin/user/updatePwd`,
-	// 充值
-	addMoney: `${API}/admin/user/addMoney`,
 }
 
 // 用户登录
@@ -69,15 +67,6 @@ export function updatePwd(data) {
 	return request({
 		method: 'post',
 		url: api.updatePwd,
-		data,
-	})
-}
-
-// 充值
-export function addMoney(data) {
-	return request({
-		method: 'post',
-		url: api.addMoney,
 		data,
 	})
 }

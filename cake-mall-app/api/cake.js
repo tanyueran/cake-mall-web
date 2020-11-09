@@ -9,7 +9,8 @@ const api = {
 	getCake: `${API}/cake/product/getPage`,
 	// 根据id查询蛋糕详情
 	getCakeInfoById: `${API}/cake/product/detail`,
-	
+	// 下单
+	createOrder: `${API}/order/action/create`,
 }
 
 // 分页查询蛋糕
@@ -30,3 +31,11 @@ export function getCakeInfoById(id) {
 	})
 }
 
+// 下单
+export function createOrder(data) {
+	return request({
+		url: api.createOrder,
+		method: 'post',
+		data,
+	})
+}

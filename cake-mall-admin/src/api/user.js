@@ -28,6 +28,8 @@ const api = {
   allRole: `/${API}/admin/role/all`,
   // 密码初始化
   initPwd: `/${API}/admin/user/initPwd`,
+  // 充值
+  addMoney: `/${API}/admin/user/addMoney`,
 };
 
 
@@ -130,5 +132,14 @@ export async function initPwd(id) {
   return request({
     method: 'put',
     url: `${api.initPwd}/${id}`,
+  })
+}
+
+// 添加金额
+export async function addMoney(data) {
+  return request({
+    method: 'post',
+    url: api.addMoney,
+    data,
   })
 }

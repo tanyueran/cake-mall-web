@@ -72,6 +72,9 @@
 				return previewFile(this.headImg);
 			},
 		},
+		created() {
+			this.getPrimarykey();
+		},
 		methods: {
 			// 获取主键
 			getPrimarykey() {

@@ -15,9 +15,12 @@
 				￥{{infoObj.price}}
 			</view>
 		</view>
+		<view class="txt-wrapper">
+			<textarea type="textarea" v-model="remark" placeholder="请输入备注" />
+			</view>
 		<view class="btn-wrapper">
-			<uni-number-box :min="1" :max="9"></uni-number-box>
-			<button>下单</button>
+			<uni-number-box :value="number" @change="numberChangeHandler" :min="1" :max="9"></uni-number-box>
+			<button @click="createOrderHandler">下单</button>
 		</view>
 	</view>
 </template>
@@ -36,37 +39,87 @@
 	import uniNumberBox from "@/components/uni-number-box/uni-number-box.vue";
 	import {
 		getCakeInfoById,
+		createOrder,
 	} from '../../api/cake.js';
 	import {
 		previewFile,
+		getKey,
 	} from "../../api/common.js"
 	export default {
 		data() {
 			return {
-				id: '',
 				infoObj: {},
-				orderId: '',
+				cakeId: '',
+				id:'',
+				remark:'',
+				number:1,
 			}
 		},
 		components: {
 			uniNumberBox,
 		},
 		onLoad(option) {
-			this.id = option.id;
+			this.cakeId = option.id;
 			this.getDetail();
+		},
+		created() {
+			this.getPrimaryKey();
 		},
 		methods: {
 			// 获取蛋糕详情
 			getDetail() {
-				getCakeInfoById(this.id).then(res => {
+				getCakeInfoById(this.cakeId).then(res => {
 					this.infoObj = res;
 				}).catch(err => {
 					console.log(err);
 				})
 			},
+			// 获取主键
+			getPrimaryKey() {
+				getKey(1).then(res => {
+					this.id = res[0];
+				}).catch(() => {});
+			},
 			// 预览图片
 			previewImg(fileId) {
 				return previewFile(fileId);
+			},
+			numberChangeHandler(val){
+				this.number = val;
+			},
+			// 下单
+			createOrderHandler() {
+				uni.showModal({
+					title: '提示',
+					content: '这是一个模态弹窗',
+					success: (res) => {
+						// 用户确认
+						if (res.confirm) {
+							createOrder({
+								id: this.id,
+								cakeId: this.cakeId,
+								number: this.number,
+								buyUserId: this.$store.state.userInfo.cakeUser.id,
+								remark: this.remark,
+							}).then(result => {
+								if(result){
+									uni.showToast({
+										title:'下单成功',
+									});
+									this.getPrimaryKey();
+									this.number = 1;
+									this.remark = "";
+								}else{
+									uni.showToast({
+										title:'下单失败',
+									})
+								}
+							}).catch(err => {
+								console.log(err);
+							})
+						}
+					}
+				});
 			}
 		},
 	}
@@ -144,6 +197,14 @@
 			margin: 0;
 			width: 50%;
 
+		}
+	}
+	
+	.txt-wrapper{
+		background-color: #fff;
+		margin: 20rpx;
+		textarea{
+			padding:20rpx;
 		}
 	}
 </style>
