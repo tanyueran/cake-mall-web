@@ -5,6 +5,7 @@
 		},
 		onShow: function(options) {
 			console.log('App Show');
+			this.$store.commit("init");
 			// 判断是否登录
 			if (this.$store.getters.getToken == "") {
 				if (options.path != "pages/register/index") {

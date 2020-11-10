@@ -26,6 +26,16 @@ const store = new Vuex.Store({
 		}
 	},
 	mutations: {
+		init(state) {
+			let token = uni.getStorageSync('token');
+			if (token) {
+				Vue.set(state, "token", token);
+			}
+			let userInfo = uni.getStorageSync("userInfo");
+			if (userInfo) {
+				Vue.set(state, "userInfo", userInfo);
+			}
+		},
 		setToken(state, val) {
 			uni.setStorageSync("token", val);
 			Vue.set(state, "token", val);

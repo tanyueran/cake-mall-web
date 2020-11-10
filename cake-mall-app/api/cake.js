@@ -11,6 +11,10 @@ const api = {
 	getCakeInfoById: `${API}/cake/product/detail`,
 	// 下单
 	createOrder: `${API}/order/action/create`,
+	// 查询“我的”页面的数据
+	getMyPageInfo: `${API}/order/action/orderCollectionInfo`,
+	// 分页查询订单数据
+	getOrderByPage: `${API}/order/action/pageQuery`,
 }
 
 // 分页查询蛋糕
@@ -35,6 +39,23 @@ export function getCakeInfoById(id) {
 export function createOrder(data) {
 	return request({
 		url: api.createOrder,
+		method: 'post',
+		data,
+	})
+}
+
+// 查询个人订单集合数据
+export function getMyPageInfo(userId) {
+	return request({
+		url: `${api.getMyPageInfo}/${userId}`,
+		method: 'get',
+	})
+}
+
+// 分页查询订单列表
+export function getOrderByPage(data) {
+	return request({
+		url: api.getOrderByPage,
 		method: 'post',
 		data,
 	})

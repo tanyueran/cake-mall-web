@@ -29,7 +29,9 @@
 		{
 			"path": "pages/order/index",
 			"style": {
-				"navigationBarTitleText": "蛋糕商城"
+				"navigationBarTitleText": "蛋糕商城",
+				"onReachBottomDistance": 50,
+				"enablePullDownRefresh": true
 			}
 		},
 		{

@@ -10,9 +10,9 @@
 		</view>
 
 		<uni-list style="margin-bottom: 10px;">
-			<uni-list-item title="账户余额" :note="userInfo.money + ''"></uni-list-item>
-			<uni-list-item title="已花金额" note="400.00"></uni-list-item>
-			<uni-list-item title="订单数量" note="41"></uni-list-item>
+			<uni-list-item title="账户余额" :note="userInfo.money + '元'"></uni-list-item>
+			<uni-list-item title="已花金额" :note="orderInfo.totalMoney + '元'"></uni-list-item>
+			<uni-list-item title="订单数量" :note="orderInfo.orderNumber + '单'"></uni-list-item>
 		</uni-list>
 
 		<uni-list>
@@ -28,11 +28,25 @@
 	import {
 		addMoney,
 	} from '../../api/user.js';
+	import {
+		getMyPageInfo,
+	} from "../../api/cake.js";
 	export default {
 		data() {
 			return {
-
+				orderInfo: {
+					orderNumber: '',
+					totalMoney: '',
+				}
 			}
+		},
+		created() {
+			getMyPageInfo(this.$store.state.userInfo.cakeUser.id).then(res => {
+				this.orderInfo.orderNumber = res.totalOrderNumber;
+				this.orderInfo.totalMoney = res.totalMoney;
+			}).catch(err => {
+				console.log(err);
+			})
 		},
 		computed: {
 			nickname() {
