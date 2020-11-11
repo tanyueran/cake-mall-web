@@ -91,7 +91,7 @@
 			createOrderHandler() {
 				uni.showModal({
 					title: '提示',
-					content: '这是一个模态弹窗',
+					content: `您确定购买[${this.infoObj.name}]${this.number}个吗`,
 					success: (res) => {
 						// 用户确认
 						if (res.confirm) {
@@ -104,7 +104,7 @@
 							}).then(result => {
 								if(result){
 									uni.showToast({
-										title:'下单成功',
+										title:'下单成功，请在30分钟内付款！',
 									});
 									this.getPrimaryKey();
 									this.number = 1;

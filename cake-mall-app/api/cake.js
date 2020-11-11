@@ -15,6 +15,8 @@ const api = {
 	getMyPageInfo: `${API}/order/action/orderCollectionInfo`,
 	// 分页查询订单数据
 	getOrderByPage: `${API}/order/action/pageQuery`,
+	// 查询订单详情
+	getOrderDetailById: `${API}/order/action/orderDetail`,
 }
 
 // 分页查询蛋糕
@@ -58,5 +60,13 @@ export function getOrderByPage(data) {
 		url: api.getOrderByPage,
 		method: 'post',
 		data,
+	})
+}
+
+
+// 查询订单详情
+export function getOrderDetailById(id) {
+	return request({
+		url: `${api.getOrderDetailById}/${id}`,
 	})
 }

@@ -35,6 +35,13 @@
 			}
 		},
 		{
+			"path": "pages/order/detail",
+			"style": {
+				"navigationBarTitleText": "蛋糕商城",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/detail/index",
 			"style": {
 				"navigationBarTitleText": "蛋糕详情"
