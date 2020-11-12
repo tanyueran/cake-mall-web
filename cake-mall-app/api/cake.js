@@ -17,6 +17,8 @@ const api = {
 	getOrderByPage: `${API}/order/action/pageQuery`,
 	// 查询订单详情
 	getOrderDetailById: `${API}/order/action/orderDetail`,
+	// 订单付款
+	orderPay: `${API}/order/action/order/pay`,
 }
 
 // 分页查询蛋糕
@@ -68,5 +70,14 @@ export function getOrderByPage(data) {
 export function getOrderDetailById(id) {
 	return request({
 		url: `${api.getOrderDetailById}/${id}`,
+	})
+}
+
+// 订单付款
+export function orderPay(data) {
+	return request({
+		url: api.orderPay,
+		method: 'post',
+		data,
 	})
 }

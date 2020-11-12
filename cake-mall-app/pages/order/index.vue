@@ -32,27 +32,27 @@
 							未付款,订单取消
 						</view>
 					</template>
-					<template v-else-if="item.state === 10">
+					<template v-else-if="item.status === 10">
 						<view class="text-ice">
 							已付款，待发货
 						</view>
 					</template>
-					<template v-else-if="item.state === 15">
+					<template v-else-if="item.status === 15">
 						<view class="text-danger">
 							已拒单，订单取消
 						</view>
 					</template>
-					<template v-else-if="item.state === 20">
+					<template v-else-if="item.status === 20">
 						<view class="text-ice">
 							已接单，待配货
 						</view>
 					</template>
-					<template v-else-if="item.state === 30">
+					<template v-else-if="item.status === 30">
 						<view class="text-ice">
 							已配送，待收货
 						</view>
 					</template>
-					<template v-else-if="item.state === 40">
+					<template v-else-if="item.status === 40">
 						<view class="text-success">
 							已收货，完成订单
 						</view>
@@ -120,7 +120,6 @@
 			},
 			// 跳转订单详情页面
 			goToDetailHandler(orderId) {
-				console.log(orderId)
 				uni.navigateTo({
 					url: `/pages/order/detail?id=${orderId}`
 				});

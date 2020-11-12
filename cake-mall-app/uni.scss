@@ -114,3 +114,19 @@ $uni-font-size-paragraph:30rpx;
 .text-ice{
 	color:#409EFF;
 }
+
+.title{
+	background-color: #FFF;
+	padding:10rpx;
+	padding-left: 40rpx;
+	position: relative;
+	&::before{
+		content:'';
+		position: absolute;
+		top:0;
+		left:15rpx;
+		bottom:0;
+		width: 10rpx;
+		background-color: #999;
+	}
+}
