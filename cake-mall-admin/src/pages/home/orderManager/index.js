@@ -13,12 +13,18 @@ import {
   Button,
   Table,
   Tag,
+  Popconfirm,
+  message,
 } from "antd";
 
 import {connect} from 'react-redux';
 
 import {
   pageQueryList,
+  refuseOrder,
+  giveOrder,
+  send,
+  orderOver,
 } from "../../../api/order.js";
 
 import style from "./index.module.scss";
@@ -60,14 +66,35 @@ class OrderManagerPage extends React.Component {
       title: '购买人',
       dataIndex: 'buyUser',
       key: 'buyUser',
+      width: 200,
       render(data) {
         return `${data.nickname}(${data.userName})`;
+      }
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      width: 200,
+      render(data) {
+        return <>
+          {
+            data === 0 ? <Tag color={"lime"}>已下单，未付款</Tag> :
+              data === 5 ? <Tag color={"error"}>未付款，订单取消</Tag> :
+                data === 10 ? <Tag color={"green"}>已付款，待发货</Tag> :
+                  data === 15 ? <Tag color={"#f50"}>已拒单，订单取消</Tag> :
+                    data === 20 ? <Tag color={"processing"}>已接单，待配货</Tag> :
+                      data === 30 ? <Tag color={"success"}>已配送，待收货</Tag> :
+                        data === 40 ? <Tag color={"#108ee9"}>已收货，完成订单</Tag> : '数据有问题'
+          }
+        </>;
       }
     },
     {
       title: '操作人',
       dataIndex: 'actionUser',
       key: 'actionUser',
+      width: 200,
       render(data) {
         if (data) {
           return `${data.nickname}(${data.userName})`;
@@ -80,24 +107,7 @@ class OrderManagerPage extends React.Component {
       title: '下单时间',
       dataIndex: 'createTime',
       key: 'createTime',
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-      render(data) {
-        return <Tag>
-          {
-            data === 0 ? '已下单，未付款' :
-              data === 5 ? '未付款，订单取消' :
-                data === 10 ? '已付款，待发货' :
-                  data === 15 ? '已拒单，订单取消' :
-                    data === 20 ? '已接单，待配货' :
-                      data === 30 ? '已配送，待收货' :
-                        data === 40 ? '已收货，完成订单' : '数据有问题'
-          }
-        </Tag>;
-      }
+      width: 220,
     },
     {
       title: '买家备注',
@@ -109,8 +119,9 @@ class OrderManagerPage extends React.Component {
     {
       title: '操作',
       fixed: 'right',
-      width: 200,
-      render(data) {
+      align: 'center',
+      width: 180,
+      render: (data) => {
         /*
         订单状态(
           0、已下单，未付款；
@@ -123,9 +134,134 @@ class OrderManagerPage extends React.Component {
         */
         return <div>
           {
-            data.status === 10 ? <><Button>接受订单</Button><Button>拒绝订单</Button></> :
-              data.status === 20 ? <Button>发货</Button> :
-                data.status === 30 ? <Button>完成订单</Button> : ''
+            data.status === 10 ? <>
+                <Popconfirm
+                  title="您确定接受该订单吗?"
+                  onConfirm={() => {
+                    this.setState({
+                      loading: true,
+                    });
+                    giveOrder({
+                      userId: this.props.user.userInfo.data.id,
+                      orderId: data.id,
+                    }).then(res => {
+                      if (res) {
+                        message.success("操作成功");
+                        this.query();
+                      } else {
+                        message.error('操作失败');
+                      }
+                    }).catch(err => {
+                      console.log(err);
+                    }).finally(() => {
+                      this.setState({
+                        loading: false,
+                      });
+                    })
+                  }}
+                  onCancel={() => {
+                  }}
+                  okText="确定"
+                  cancelText="取消"
+                >
+                  <Button type={"primary"} size={"small"}>接受订单</Button>
+                </Popconfirm>
+                &nbsp;
+                <Popconfirm
+                  title="您确定拒绝该订单吗?"
+                  onConfirm={() => {
+                    this.setState({
+                      loading: true,
+                    });
+                    refuseOrder(data.id).then(res => {
+                      if (res) {
+                        message.success("操作成功");
+                        this.query();
+                      } else {
+                        message.error('操作失败');
+                      }
+                    }).catch(err => {
+                      console.log(err);
+                    }).finally(() => {
+                      this.setState({
+                        loading: false,
+                      });
+                    })
+                  }}
+                  onCancel={() => {
+                  }}
+                  okText="确定"
+                  cancelText="取消"
+                >
+                  <Button type={"danger"} size={"small"}>拒绝订单</Button>
+                </Popconfirm>
+              </> :
+              data.status === 20 ? <>
+                  <Popconfirm
+                    title="您确定发货吗?"
+                    onConfirm={() => {
+                      this.setState({
+                        loading: true,
+                      });
+                      send({
+                        userId: this.props.user.userInfo.data.id,
+                        orderId: data.id,
+                      }).then(res => {
+                        if (res) {
+                          message.success("操作成功");
+                          this.query();
+                        } else {
+                          message.error('操作失败');
+                        }
+                      }).catch(err => {
+                        console.log(err);
+                      }).finally(() => {
+                        this.setState({
+                          loading: false,
+                        });
+                      })
+                    }}
+                    onCancel={() => {
+                    }}
+                    okText="确定"
+                    cancelText="取消"
+                  >
+                    <Button type={"primary"} size={"small"}>发货</Button>
+                  </Popconfirm>
+                </> :
+                data.status === 30 ? <>
+                  <Popconfirm
+                    title="您确定完成订单吗?"
+                    onConfirm={() => {
+                      this.setState({
+                        loading: true,
+                      });
+                      orderOver({
+                        userId: this.props.user.userInfo.data.id,
+                        orderId: data.id,
+                      }).then(res => {
+                        if (res) {
+                          message.success("操作成功");
+                          this.query();
+                        } else {
+                          message.error('操作失败');
+                        }
+                      }).catch(err => {
+                        console.log(err);
+                      }).finally(() => {
+                        this.setState({
+                          loading: false,
+                        });
+                      })
+                    }}
+                    onCancel={() => {
+                    }}
+                    okText="确定"
+                    cancelText="取消"
+                  >
+                    <Button type={"primary"} size={"small"}>完成订单</Button>
+                  </Popconfirm>
+                </> : ''
           }
         </div>;
       }
@@ -178,8 +314,18 @@ class OrderManagerPage extends React.Component {
     });
   };
 
-  changeHandler = () => {
-
+  changeHandler = (page, pageSize) => {
+    this.setState(state => {
+      return {
+        pagination: {
+          ...state.pagination,
+          current: page,
+          pageSize: pageSize,
+        }
+      }
+    }, () => {
+      this.query();
+    });
   };
 
   render() {
@@ -222,7 +368,7 @@ class OrderManagerPage extends React.Component {
 
       <Table
         rowKey="id"
-        scroll={{x: '120%', scrollToFirstRowOnChange: true,}}
+        scroll={{x: '120%', y: '50vh', scrollToFirstRowOnChange: true,}}
         bordered
         loading={this.state.loading}
         dataSource={this.state.dataSource}

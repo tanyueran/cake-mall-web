@@ -466,6 +466,7 @@ class CakeMangerPage extends React.Component {
         bordered
         loading={this.state.loading}
         dataSource={this.state.dataSource}
+        scroll={{y: '50vh', scrollToFirstRowOnChange: true,}}
         pagination={{
           defaultPageSize: this.state.pagination.pageSize,
           defaultCurrent: this.state.pagination.current,
