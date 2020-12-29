@@ -4,10 +4,8 @@
  * @Description: 布局页面
  */
 import React from 'react';
-import {withRouter, Route, Redirect} from 'react-router'
-import {connect} from 'react-redux';
-
-import {del_user} from '../store/user/action.js';
+import { withRouter, Route, Redirect } from 'react-router';
+import { connect } from 'react-redux';
 
 import {
   Layout,
@@ -23,36 +21,51 @@ import {
   CaretDownOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-} from '@ant-design/icons'
+} from '@ant-design/icons';
+import { del_user, pullUserInfo } from '../store/user/action';
 
-import MNav from '../component/MNav.js';
+import MNav from '../component/MNav';
 
 import './index.scss';
-import {pullUserInfo} from "../store/user/action";
 
 import logo from '../assets/images/logo.jpg';
-import {previewFile} from "../api/commom";
-
+import { previewFile } from '../api/commom';
 
 class IndexPage extends React.Component {
-
   static stateToProps(state) {
     return {
-      user: state.userReducer
+      user: state.userReducer,
+    };
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapsed: false,
+    };
+  }
+
+  componentDidMount() {
+    // 判断是否登录
+    if (!this.props.user.userInfo.isLogin) {
+      this.props.history.replace('/login');
+    } else if (!this.props.user.userInfo.data.userCode) {
+      // 获取用户信息
+      this.props.dispatch(pullUserInfo());
     }
   }
 
-  state = {
-    collapsed: false,
-  };
+  componentWillUnmount() {
+    this.setState = () => false;
+  }
 
   /**
    *  切换
    */
   toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
+    this.setState((state) => ({
+        collapsed: !state.collapsed,
+      }));
   };
 
   /**
@@ -60,93 +73,93 @@ class IndexPage extends React.Component {
    * */
   logoutHandler = () => {
     this.props.dispatch(del_user());
-    this.props.history.replace("/login");
+    this.props.history.replace('/login');
   };
-
-  componentWillUnmount() {
-    this.setState = () => false;
-  }
-
-  componentDidMount() {
-    // 判断是否登录
-    if (!this.props.user.userInfo.isLogin) {
-      this.props.history.replace('/login');
-    } else {
-      if (!this.props.user.userInfo.data.userCode) {
-        // 获取用户信息
-        this.props.dispatch(pullUserInfo());
-      }
-    }
-  }
 
   render() {
     return (
       <Layout className="app-wrapper">
-        <Layout.Sider theme={'light'} trigger={null} collapsible collapsed={this.state.collapsed}>
-          <div className="logo" style={{cursor: 'pointer'}} onClick={() => {
-            this.props.history.push('/')
-          }}>
-            <img alt={"logo"} width={40} src={logo}/>
+        <Layout.Sider theme="light" trigger={null} collapsible collapsed={this.state.collapsed}>
+          <div
+            className="logo"
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              this.props.history.push('/');
+            }}>
+            <img alt="logo" width={40} src={logo} />
             {
-              this.state.collapsed ? "" : "蛋糕商城管理系统"
+              this.state.collapsed ? '' : '蛋糕商城管理系统'
             }
           </div>
-          <MNav/>
+          <MNav />
         </Layout.Sider>
-        <Layout className={"app-content-wrapper"}>
-          <Layout.Header style={{padding: "0 10px",}}>
-            <Row type={"flex"}>
+        <Layout className="app-content-wrapper">
+          <Layout.Header style={{ padding: '0 10px' }}>
+            <Row type="flex">
               <Col span={12}>
                 {
-                  this.state.collapsed ?
-                    <MenuUnfoldOutlined onClick={this.toggle}/> :
-                    <MenuFoldOutlined onClick={this.toggle}/>
+                  this.state.collapsed
+                    ? <MenuUnfoldOutlined onClick={this.toggle} />
+                    : <MenuFoldOutlined onClick={this.toggle} />
                 }
               </Col>
-              <Col push={8} span={4} style={{justifyContent: 'center', display: 'flex', alignItems: 'center'}}>
-                {/*头像*/}
+              <Col push={8} span={4} style={{ justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
+                {/* 头像 */}
                 {
-                  this.props.user.userInfo.data.headImg ?
-                    <Avatar src={previewFile(this.props.user.userInfo.data.headImg)}
-                            style={{margin: "0 1em"}}
-                            size={"large"}/> :
-                    <Avatar style={{margin: "0 1em"}} size={"large"} icon={<UserOutlined/>}/>
+                  this.props.user.userInfo.data.headImg
+                    ? (
+                      <Avatar
+                        src={previewFile(this.props.user.userInfo.data.headImg)}
+                        style={{ margin: '0 1em' }}
+                        size="large" />
+                    )
+                    : <Avatar style={{ margin: '0 1em' }} size="large" icon={<UserOutlined />} />
                 }
-                <Dropdown overlay={
-                  <Menu theme={"light"}>
+                <Dropdown overlay={(
+                  <Menu theme="light">
                     <Menu.Item onClick={() => {
-                      this.props.history.push('/home/personInfo')
-                    }}>个人中心</Menu.Item>
+                      this.props.history.push('/home/personInfo');
+                    }}>
+                      个人中心
+                    </Menu.Item>
                     <Menu.Item onClick={this.logoutHandler}>退出</Menu.Item>
                   </Menu>
-                }>
-                  <a href={"/#"} onClick={(e) => {
-                    e.preventDefault();
-                  }} style={{fontSize: "16px",}}>
+                )}>
+                  <a
+                    href="/#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                    style={{ fontSize: '16px' }}>
                     {this.props.user.userInfo.data.userName}
-                    <CaretDownOutlined style={{marginLeft: "5px"}}/>
+                    <CaretDownOutlined style={{ marginLeft: '5px' }} />
                   </a>
                 </Dropdown>
               </Col>
             </Row>
           </Layout.Header>
-          <Layout.Content className={"app-content-wrapper_box"}
-                          style={{overflow: 'auto', margin: '20px 10px'}}>
-            {/*配置子路由*/}
+          <Layout.Content
+            className="app-content-wrapper_box"
+            style={{ overflow: 'auto', margin: '20px 10px' }}>
+            {/* 配置子路由 */}
             {
-              this.props.routes.map((item, i) =>
-                <Route exact={item.exact} path={item.path} key={i} render={props => {
-                  return <item.component {...props}/>
-                }}/>
-              )
+              this.props.routes.map((item, i) => (
+                <Route
+                  exact={item.exact}
+                  path={item.path}
+                  key={i}
+                  render={(props) => <item.component {...props} />} />
+              ))
             }
-            {/* 配置404*/}
+            {/* 配置404 */}
             {
-              this.props.routes.findIndex(item => item.path === this.props.location.pathname) === -1 &&
-              < Redirect to="/home/404"/>
+              this.props.routes.findIndex(
+                (item) => item.path === this.props.location.pathname,
+              ) === -1
+              && <Redirect to="/home/404" />
             }
           </Layout.Content>
-          <Layout.Footer className={"text-center"} style={{margin: "0 10px",}}>
+          <Layout.Footer className="text-center" style={{ margin: '0 10px' }}>
             ©2020
           </Layout.Footer>
         </Layout>

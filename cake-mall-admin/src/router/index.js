@@ -3,11 +3,11 @@
  * @date $
  * @Description: 路由配置信息
  */
-import MLoading from "../component/MLazyLoad";
+import MLoading from '../component/MLazyLoad';
 
-const LoginPageUrl = () => import('../pages/login/index.js');
+const LoginPageUrl = () => import('../pages/login/index');
 
-const notFoundPageUrl = () => import('../pages/notFound/index.js');
+const notFoundPageUrl = () => import('../pages/notFound/index');
 
 const routers = [
   {
@@ -16,54 +16,54 @@ const routers = [
     component: MLoading(LoginPageUrl),
   },
   {
-    component: MLoading(() => import('../layout/index.js')),
+    component: MLoading(() => import('../layout/index')),
     children: [
       // 首页
       {
         path: '/home/index',
         exact: true,
-        component: MLoading(() => import('../pages/home/index/index.js')),
+        component: MLoading(() => import('../pages/home/index/index')),
       },
       {
         path: '/home/cakeManager',
         exact: true,
-        component: MLoading(() => import('../pages/home/cakeManager/index.js')),
+        component: MLoading(() => import('../pages/home/cakeManager/index')),
       },
       {
         path: '/home/orderManager',
         exact: true,
-        component: MLoading(() => import('../pages/home/orderManager/index.js')),
+        component: MLoading(() => import('../pages/home/orderManager/index')),
       },
       {
         path: '/home/personInfo',
         exact: true,
-        component: MLoading(() => import('../pages/home/personInfo/index.js')),
+        component: MLoading(() => import('../pages/home/personInfo/index')),
       },
       {
         path: '/home/roleManager',
         exact: true,
-        component: MLoading(() => import('../pages/home/roleManager/index.js')),
+        component: MLoading(() => import('../pages/home/roleManager/index')),
       },
       {
         path: '/home/userManager',
         exact: true,
-        component: MLoading(() => import('../pages/home/userManager/index.js')),
+        component: MLoading(() => import('../pages/home/userManager/index')),
       },
       {
         path: '/home/categoriesManager',
         exact: true,
-        component: MLoading(() => import('../pages/home/categoryManager/index.js')),
+        component: MLoading(() => import('../pages/home/categoryManager/index')),
       },
 
       {
         path: '/home/404',
         component: MLoading(notFoundPageUrl),
       },
-    ]
+    ],
   },
   {
     component: MLoading(notFoundPageUrl),
-  }
+  },
 ];
 
 export default routers;

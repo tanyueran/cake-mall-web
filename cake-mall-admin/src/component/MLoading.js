@@ -3,10 +3,10 @@
  * @date $
  * @Description:
  */
-import React from 'react'
-import {Spin,} from "antd";
+import React from 'react';
+import { Spin } from 'antd';
 
-let style = {
+const style = {
   position: 'fixed',
   top: 0,
   left: 0,
@@ -17,7 +17,6 @@ let style = {
   justifyContent: 'center',
 };
 
-const loading = () => <Spin delay={300} style={style} size={"large"}/>;
+const loading = () => <Spin delay={300} style={style} size="large" />;
 
 export default loading;
-

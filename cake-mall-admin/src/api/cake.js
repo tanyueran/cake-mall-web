@@ -3,8 +3,8 @@
  * @date $
  * @Description: 蛋糕类型api
  */
-import request from '../utils/request.js';
-import {API} from '../constant/index.js';
+import request from '../utils/request';
+import { API } from '../constant/index';
 
 const api = {
   // 查询所有的类型
@@ -23,7 +23,7 @@ const api = {
 export async function getAllCategories() {
   return request({
     url: api.getAllCategories,
-  })
+  });
 }
 
 // 分页查询列表
@@ -32,7 +32,7 @@ export async function getCakesByPage(data) {
     url: api.getCakesByPage,
     method: 'post',
     data,
-  })
+  });
 }
 
 // 删除蛋糕
@@ -49,7 +49,7 @@ export async function updateCake(data) {
     url: api.updateCake,
     method: 'put',
     data,
-  })
+  });
 }
 
 // 新增蛋糕
@@ -58,7 +58,5 @@ export async function addCake(data) {
     url: api.addCake,
     method: 'post',
     data,
-  })
+  });
 }
-
-

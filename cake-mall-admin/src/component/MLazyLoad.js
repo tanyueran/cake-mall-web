@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import Loading from "./MLoading.js"
+import Loading from './MLoading';
 
 /**
  * 懒加载组件

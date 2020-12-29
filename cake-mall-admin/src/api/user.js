@@ -3,8 +3,8 @@
  * @date $
  * @Description: 用户的登录、个人中心的配置api接口
  */
-import request from '../utils/request.js';
-import {API} from '../constant/index.js';
+import request from '../utils/request';
+import { API } from '../constant/index';
 
 const api = {
   login: `/${API}/admin/user/aLogin`,
@@ -32,7 +32,6 @@ const api = {
   addMoney: `/${API}/admin/user/addMoney`,
 };
 
-
 // 用户登录
 export async function login(data) {
   return request({
@@ -47,7 +46,7 @@ export async function getUserInfo() {
   return request({
     method: 'get',
     url: api.getUserInfo,
-  })
+  });
 }
 
 // 注册
@@ -56,7 +55,7 @@ export async function register(data) {
     method: 'post',
     url: api.register,
     data,
-  })
+  });
 }
 
 // 编辑用户信息
@@ -65,7 +64,7 @@ export async function updateUserInfo(data) {
     method: 'put',
     url: api.updateUserInfo,
     data,
-  })
+  });
 }
 
 // 更新用户密码
@@ -74,7 +73,7 @@ export async function updatePwd(data) {
     method: 'post',
     url: api.updatePwd,
     data,
-  })
+  });
 }
 
 // 查询分页查询分页列表
@@ -83,7 +82,7 @@ export async function getUsersByPage(data) {
     method: 'post',
     url: api.getUsersByPage,
     data,
-  })
+  });
 }
 
 // 冻结用户
@@ -91,7 +90,7 @@ export async function freezeUser(id) {
   return request({
     method: 'put',
     url: `${api.freezeUser}/${id}`,
-  })
+  });
 }
 
 // 解冻账户
@@ -99,7 +98,7 @@ export async function unfreezeUser(id) {
   return request({
     method: 'put',
     url: `${api.unfreezeUser}/${id}`,
-  })
+  });
 }
 
 // 添加用户
@@ -117,14 +116,14 @@ export async function editUser(data) {
     method: 'put',
     url: api.editUser,
     data,
-  })
+  });
 }
 
 // 获取所有的角色
 export async function allRole() {
   return request({
     url: api.allRole,
-  })
+  });
 }
 
 // 密码初始化
@@ -132,7 +131,7 @@ export async function initPwd(id) {
   return request({
     method: 'put',
     url: `${api.initPwd}/${id}`,
-  })
+  });
 }
 
 // 添加金额
@@ -141,5 +140,5 @@ export async function addMoney(data) {
     method: 'post',
     url: api.addMoney,
     data,
-  })
+  });
 }

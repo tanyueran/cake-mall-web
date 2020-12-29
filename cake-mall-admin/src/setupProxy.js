@@ -3,12 +3,13 @@
  * @date $
  * @Description: 代理
  */
-const {createProxyMiddleware} = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 // 没有开启mock是启用代理
-let app = process.argv[2] === 'mock' ? function () {
-} : function (app) {
-  console.log("代理开启了=====");
+const app = process.argv[2] === 'mock' ? () => {
+// eslint-disable-next-line no-shadow
+} : (app) => {
+  console.log('代理开启了=====');
   app.use(
     '/api',
     createProxyMiddleware({
@@ -17,7 +18,7 @@ let app = process.argv[2] === 'mock' ? function () {
       pathRewrite: {
         '^/api': '', // rewrite path
       },
-    })
+    }),
   );
 };
 

@@ -6,13 +6,12 @@
 const s = window.sessionStorage;
 
 export default class Storage {
-
   static set(key, val) {
     s.setItem(key, JSON.stringify(val));
   }
 
   static get(key) {
-    let val = s.getItem(key);
+    const val = s.getItem(key);
     if (val === null) {
       return null;
     }
