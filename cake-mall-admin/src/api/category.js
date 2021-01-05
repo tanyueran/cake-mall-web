@@ -8,13 +8,13 @@ import { API } from '../constant/index';
 
 const api = {
   // 分页查询类型数据
-  queryCategoriesByPage: `/${API}/cake/categories/getByPage`,
+  queryCategoriesByPage: `${API}/cake/categories/getByPage`,
   // 新增类型
-  addCategory: `/${API}/cake/categories/add`,
+  addCategory: `${API}/cake/categories/add`,
   // 编辑类型
-  editCategory: `/${API}/cake/categories/update`,
+  editCategory: `${API}/cake/categories/update`,
   // 删除类型
-  deleteCategory: `/${API}/cake/categories/delete`,
+  deleteCategory: `${API}/cake/categories/delete`,
 };
 
 // 分页查询角色数据

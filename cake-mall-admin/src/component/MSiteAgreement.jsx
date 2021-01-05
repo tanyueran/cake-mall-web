@@ -1,12 +1,13 @@
+/**
+ * @author tanxin
+ * @date 2020/12/31
+ * @Description: 网站的用户协议文字
+ */
 import React from 'react';
-
 import { Typography } from 'antd';
 
 const { Title, Paragraph, Text } = Typography;
 
-/**
- * 网站的用户协议文字
- */
 class MSiteAgreement extends React.Component {
   render() {
     return (

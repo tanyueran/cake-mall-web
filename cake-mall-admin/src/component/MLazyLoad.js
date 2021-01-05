@@ -1,3 +1,8 @@
+/**
+ * @author tanxin
+ * @date 2020/12/31
+ * @Description: 组件懒加载
+ */
 import Loadable from 'react-loadable';
 import Loading from './MLoading';
 

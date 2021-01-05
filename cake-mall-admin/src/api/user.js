@@ -7,29 +7,29 @@ import request from '../utils/request';
 import { API } from '../constant/index';
 
 const api = {
-  login: `/${API}/admin/user/aLogin`,
-  register: `/${API}/admin/user/register`,
+  login: `${API}/admin/user/aLogin`,
+  register: `${API}/admin/user/register`,
   // 获取用户信息
-  getUserInfo: `/${API}/admin/user/getInfo`,
+  getUserInfo: `${API}/admin/user/getInfo`,
   // 更新用户信息
-  updateUserInfo: `/${API}/admin/user/edit`,
+  updateUserInfo: `${API}/admin/user/edit`,
   // 更新密码
-  updatePwd: `/${API}/admin/user/updatePwd`,
+  updatePwd: `${API}/admin/user/updatePwd`,
   // 查询用户列表
-  getUsersByPage: `/${API}/admin/user/getByPage`,
+  getUsersByPage: `${API}/admin/user/getByPage`,
   // 冻结用户
-  freezeUser: `/${API}/admin/user/freeze`,
-  unfreezeUser: `/${API}/admin/user/unfreeze`,
+  freezeUser: `${API}/admin/user/freeze`,
+  unfreezeUser: `${API}/admin/user/unfreeze`,
   // 添加用户
-  addUser: `/${API}/admin/user/add`,
+  addUser: `${API}/admin/user/add`,
   // 编辑用户信息
-  editUser: `/${API}/admin/user/edit`,
+  editUser: `${API}/admin/user/edit`,
   // 获取角色
-  allRole: `/${API}/admin/role/all`,
+  allRole: `${API}/admin/role/all`,
   // 密码初始化
-  initPwd: `/${API}/admin/user/initPwd`,
+  initPwd: `${API}/admin/user/initPwd`,
   // 充值
-  addMoney: `/${API}/admin/user/addMoney`,
+  addMoney: `${API}/admin/user/addMoney`,
 };
 
 // 用户登录

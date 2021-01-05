@@ -1,7 +1,7 @@
 /**
  * @author tanxin
  * @date $
- * @Description: 登录页
+ * @Description: 登录页组件
  */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -19,19 +19,13 @@ import {
   LockOutlined,
 } from '@ant-design/icons';
 
-import './index.scss';
+import style from './index.module.scss';
 
 import {
   userLogin,
 } from '../../store/user/action';
 
 class LoginPage extends React.Component {
-  static stateToProps(state) {
-    return {
-      user: state.userReducer,
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -41,19 +35,19 @@ class LoginPage extends React.Component {
 
   loginHandler = (values) => {
     values.password = md5(values.password);
-    this.props.dispatch(userLogin(values, () => {
+    this.props.userLogin(values, () => {
       message.success('登录成功!');
       this.props.history.replace('/');
     }, () => {
       // 清空账号密码
       this.state.form.current.resetFields();
-    }));
+    });
   };
 
   render() {
     return (
-      <div className="login-wrapper">
-        <div className="login-content">
+      <div className={style['login-wrapper']}>
+        <div className={style['login-content']}>
           <Typography.Title>
             蛋糕管理系统
           </Typography.Title>
@@ -76,9 +70,9 @@ class LoginPage extends React.Component {
                   href="/#"
                   className="right"
                   onClick={(e) => {
-                  e.preventDefault();
-                  message.info('请联系管理员');
-                }}>
+                    e.preventDefault();
+                    message.info('请联系管理员');
+                  }}>
                   忘记密码
                 </a>
                 <br />
@@ -94,4 +88,11 @@ class LoginPage extends React.Component {
   }
 }
 
-export default connect(LoginPage.stateToProps)(LoginPage);
+export default connect(
+  (state) => ({
+    user: state.userReducer,
+  }),
+  {
+    userLogin,
+  },
+)(LoginPage);

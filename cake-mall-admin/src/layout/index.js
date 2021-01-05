@@ -22,7 +22,10 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons';
-import { del_user, pullUserInfo } from '../store/user/action';
+import {
+  del_user,
+  pullUserInfo,
+} from '../store/user/action';
 
 import MNav from '../component/MNav';
 
@@ -32,12 +35,6 @@ import logo from '../assets/images/logo.jpg';
 import { previewFile } from '../api/commom';
 
 class IndexPage extends React.Component {
-  static stateToProps(state) {
-    return {
-      user: state.userReducer,
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -51,7 +48,7 @@ class IndexPage extends React.Component {
       this.props.history.replace('/login');
     } else if (!this.props.user.userInfo.data.userCode) {
       // 获取用户信息
-      this.props.dispatch(pullUserInfo());
+      this.props.pullUserInfo();
     }
   }
 
@@ -72,7 +69,7 @@ class IndexPage extends React.Component {
    * 退出登录
    * */
   logoutHandler = () => {
-    this.props.dispatch(del_user());
+    this.props.del_user();
     this.props.history.replace('/login');
   };
 
@@ -171,4 +168,12 @@ class IndexPage extends React.Component {
 /*
 * 通过connect 引入store
 * */
-export default connect(IndexPage.stateToProps)(withRouter(IndexPage));
+export default connect(
+  (state) => ({
+    user: state.userReducer,
+  }),
+  {
+    del_user,
+    pullUserInfo,
+  },
+)(withRouter(IndexPage));

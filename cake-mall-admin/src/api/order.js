@@ -8,15 +8,15 @@ import { API } from '../constant/index';
 
 const api = {
   // 分页查询订单
-  pageQueryList: `/${API}/order/action/pageQuery`,
+  pageQueryList: `${API}/order/action/pageQuery`,
   // 拒绝订单
-  refuseOrder: `/${API}/order/action/refuseOrder`,
+  refuseOrder: `${API}/order/action/refuseOrder`,
   // 接受订单
-  giveOrder: `/${API}/order/action/giveOrder`,
+  giveOrder: `${API}/order/action/giveOrder`,
   // 发货
-  send: `/${API}/order/action/send`,
+  send: `${API}/order/action/send`,
   // 完成订单
-  orderOver: `/${API}/order/action/orderOver`,
+  orderOver: `${API}/order/action/orderOver`,
 };
 
 // 分页查询订单列表

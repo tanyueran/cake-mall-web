@@ -1,7 +1,7 @@
 /**
  * @author tanxin
  * @date $
- * @Description:
+ * @Description: loading组件
  */
 import React from 'react';
 import { Spin } from 'antd';

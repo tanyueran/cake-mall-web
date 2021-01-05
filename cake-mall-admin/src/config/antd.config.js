@@ -1,8 +1,10 @@
+/**
+ * @author tanxin
+ * @date 2020/12/31
+ * @Description: antd的一些全局配置
+ */
 import zhCN from 'antd/es/locale/zh_CN';
 
-/**
- * antd的一些全局配置
- */
 const config = {
   locale: zhCN,
   componentSize: 'middle',

@@ -8,15 +8,15 @@ import { API } from '../constant/index';
 
 const api = {
   // 查询所有的类型
-  getAllCategories: `/${API}/cake/categories/all`,
+  getAllCategories: `${API}/cake/categories/all`,
   // 分页查询蛋糕
-  getCakesByPage: `/${API}/cake/product/getPage`,
+  getCakesByPage: `${API}/cake/product/getPage`,
   // 添加蛋糕
-  addCake: `/${API}/cake/product/add`,
+  addCake: `${API}/cake/product/add`,
   // 删除蛋糕
-  deleteCake: `/${API}/cake/product/delete`,
+  deleteCake: `${API}/cake/product/delete`,
   // 编辑蛋糕信息
-  updateCake: `/${API}/cake/product/update`,
+  updateCake: `${API}/cake/product/update`,
 };
 
 // 查询所有的类型

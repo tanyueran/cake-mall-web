@@ -8,13 +8,13 @@ import { API } from '../constant/index';
 
 const api = {
   // 分页查询角色数据
-  queryRolesByPage: `/${API}/admin/role/getByPage`,
+  queryRolesByPage: `${API}/admin/role/getByPage`,
   // 新增角色
-  addRole: `/${API}/admin/role/add`,
+  addRole: `${API}/admin/role/add`,
   // 编辑角色
-  editRole: `/${API}/admin/role/update`,
+  editRole: `${API}/admin/role/update`,
   // 删除角色
-  deleteRole: `/${API}/admin/role/delete`,
+  deleteRole: `${API}/admin/role/delete`,
 };
 
 // 分页查询角色数据

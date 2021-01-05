@@ -42,12 +42,6 @@ import style from './index.module.scss';
 
 // 用户管理页面
 class UserManagerPage extends React.Component {
-  static stateToProps(state) {
-    return {
-      user: state.userReducer,
-    };
-  }
-
   columns = [
     {
       title: '用户账号',
@@ -581,4 +575,8 @@ class UserManagerPage extends React.Component {
   }
 }
 
-export default connect(UserManagerPage.stateToProps)(UserManagerPage);
+export default connect(
+  (state) => ({
+    user: state.userReducer,
+  }),
+)(UserManagerPage);

@@ -8,12 +8,12 @@ import { API } from '../constant/index';
 
 const api = {
   // 获取主键
-  getKey: `/${API}/utils/id`,
+  getKey: `${API}/utils/id`,
   // 文件操作
-  uploadFile: `/${API}/utils/file/upload`,
-  previewFile: `/${API}/utils/file/preview`,
-  downloadFile: `/${API}/utils/file/download`,
-  deleteFile: `/${API}/utils/file/delete`, // 删除文件需要token
+  uploadFile: `${API}/utils/file/upload`,
+  previewFile: `${API}/utils/file/preview`,
+  downloadFile: `${API}/utils/file/download`,
+  deleteFile: `${API}/utils/file/delete`, // 删除文件需要token
 };
 
 // 获取主键

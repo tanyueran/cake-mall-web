@@ -1,3 +1,3 @@
 // 代理的标识
-export const API = 'api';
-export const a = '';
+// eslint-disable-next-line
+export const API = '/api';

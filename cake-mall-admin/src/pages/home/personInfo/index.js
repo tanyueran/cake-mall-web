@@ -28,12 +28,6 @@ import { pullUserInfo } from '../../../store/user/action';
 
 // 个人中心
 class PersonInfoPage extends React.Component {
-  static stateToProps(state) {
-    return {
-      user: state.userReducer,
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +79,7 @@ class PersonInfoPage extends React.Component {
     updateUserInfo(data).then((res) => {
       if (res) {
         message.success('保存成功');
-        this.props.dispatch(pullUserInfo());
+        this.props.pullUserInfo();
       }
     }).catch((err) => {
       console.log(err);
@@ -283,4 +277,11 @@ class PersonInfoPage extends React.Component {
   }
 }
 
-export default connect(PersonInfoPage.stateToProps)(PersonInfoPage);
+export default connect(
+  (state) => ({
+    user: state.userReducer,
+  }),
+  {
+    pullUserInfo,
+  },
+)(PersonInfoPage);

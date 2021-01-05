@@ -1,7 +1,7 @@
 /**
  * @author tanxin
  * @date $
- * @Description:
+ * @Description: 导航组件
  */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -16,12 +16,6 @@ const IconFont = createFromIconfontCN({
 });
 
 class MNav extends React.Component {
-  static stateToProps(state) {
-    return {
-      user: state.userReducer,
-    };
-  }
-
   clickHandler = (val) => {
     this.props.history.push(val.key);
   };
@@ -61,8 +55,12 @@ class MNav extends React.Component {
           <span>订单管理</span>
         </Menu.Item>
       </Menu>
-);
+    );
   }
 }
 
-export default connect(MNav.stateToProps)(withRouter(MNav));
+export default connect(
+  (state) => ({
+    user: state.userReducer,
+  }),
+)(withRouter(MNav));

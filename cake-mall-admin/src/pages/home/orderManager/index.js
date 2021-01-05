@@ -30,12 +30,6 @@ import style from './index.module.scss';
 
 // 订单管理页面
 class OrderManagerPage extends React.Component {
-  static stateToProps(state) {
-    return {
-      user: state.userReducer,
-    };
-  }
-
   columns = [
     {
       title: '订单标号',
@@ -388,4 +382,8 @@ class OrderManagerPage extends React.Component {
   }
 }
 
-export default connect(OrderManagerPage.stateToProps)(OrderManagerPage);
+export default connect(
+  (state) => ({
+    user: state.userReducer,
+  }),
+)(OrderManagerPage);
